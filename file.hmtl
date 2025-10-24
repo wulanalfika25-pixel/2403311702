@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tugas P3: JSON Example</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            #data-container { border: 1px solid #ccc; padding: 15px; margin-top: 20px; background-color: #f9f9f9; }
+        </style>
+    </head>
+    <body>
+        <h1>Demonstrasi Pembacaan JSON (File Terpisah)</h1>
+        <p>File ini adalah demonstrasi dari kode pertemuan 3 untuk membaca <code>data.json</code> menggunakan tombol dan <code>fetch</code>.</p>
+        
+        <button onclick="getData()">Load Data (Fetch)</button>
+        
+        <div id="data-container">Tekan tombol di atas untuk memuat data JSON</div>
+
+        <script>
+            function getData() {
+                // Menggunakan Promise/Fetch untuk mengambil data.json
+                fetch('data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    const container = document.getElementById('data-container');
+                    // Tampilkan data mentah dengan formatting <pre>
+                    container.innerHTML = `<h3>Data Berhasil Dimuat:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                })
+                .catch(error => {
+                    const container = document.getElementById('data-container');
+                    container.innerHTML = `<p style="color: red;">Error fetching JSON: ${error.message}</p>`;
+                    console.error('Error fetching JSON:', error);
+                });
+            }
+        </script>
+        
+        <hr>
+        <a href="index.html">Kembali ke Halaman Utama Tugas</a>
+    </body>
+</html>
